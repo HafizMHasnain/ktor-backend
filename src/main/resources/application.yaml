@@ -1,0 +1,11 @@
+ktor:
+    application:
+        modules:
+            - com.tiktop.ApplicationKt.module
+    deployment:
+        port: 8080
+jwt:
+  domain: "https://jwt-provider-domain/"
+  audience: "jwt-audience"
+  realm: "ktor sample app"
+  secret: "super_secret_jwt_key"
