@@ -8,16 +8,17 @@ import kotlin.getValue
 
 fun Application.configureJWT() {
     val jwtModel: JWTModel by inject<JWTModel>()
-    authentication {
+    install(Authentication){
         jwt("auth-jwt") {
             realm = jwtModel.jwtRealm
             verifier(
-           verifier = jwtModel.verifier()
+                verifier = jwtModel.verifier()
             )
             validate { credential ->
                 if (!credential.payload.getClaim("userId").asString().isNullOrBlank()) JWTPrincipal(credential.payload) else null
             }
         }
+        configureGoogleOAuth()
     }
 }
 
