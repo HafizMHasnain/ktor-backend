@@ -1,12 +1,13 @@
 package com.tiktop
 
+import io.ktor.client.HttpClient
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
 import org.koin.ktor.ext.inject
 import kotlin.getValue
 
-fun Application.configureJWT() {
+fun Application.configureJWT(httpClient: HttpClient) {
     val jwtModel: JWTModel by inject<JWTModel>()
     install(Authentication){
         jwt("auth-jwt") {
@@ -18,7 +19,7 @@ fun Application.configureJWT() {
                 if (!credential.payload.getClaim("userId").asString().isNullOrBlank()) JWTPrincipal(credential.payload) else null
             }
         }
-        configureGoogleOAuth()
+        configureGoogleOAuth(httpClient = httpClient)
     }
 }
 
